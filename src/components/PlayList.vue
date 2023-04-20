@@ -1,12 +1,12 @@
 <template>
 <div>
     <div class="sellection">
-
         <div >
-            <div class="added_list" >
-                <h2 @click="select_Play_song">{{selectedSong[`title`]}}</h2>
+            <div  @click="select_Play_song" class="added_list" :playId="selectedSong[`song_id`]" >
+                <h2 >{{selectedSong[`title`]}}</h2>
+                <img :src="selectedSong[`image_url`]" alt="song album image"> 
                 <p> Artist Name:{{selectedSong[`artist`]}}</p>
-                <img :src="selectedSong[`image_url`]" alt="song album image">         
+                        
             </div>
         </div>
     </div>
@@ -16,13 +16,14 @@
 <script>
 
 export default {
-   
+    //created a props that keeps the value of selectedSong(a binded Attribute), which is in an object form 
     props: {
             selectedSong: Object,
     },
    
     data() {
         return {
+        //created variables with undefind values , and with  empty array  
             displaySongTitle:undefined,
             displaySongArtist:undefined,
             displaySongId: undefined,
@@ -30,13 +31,19 @@ export default {
         }
     },
     methods: {
+        //created a method that takes details as Argument
         select_Play_song: function ( details ) {
-            let get_title = details[`target`].innerText;
+            let get_id = details[`target`].getAttribute( `playId` );
+        // pushed the value of our props (object) in to the empty arry
             this.currentPlayingSong.push(this.selectedSong)
             for ( let i = 0; i < this.currentPlayingSong.length; i++ ){
-                if ( get_title ===  this.currentPlayingSong[i][`title`]){
-                    this.$emit( `select_Play_song`, this.currentPlayingSong[i][`title`])
-                 
+            // looped through the currentlyPlayingSong Array and check if we have the same  id number 
+            //if the id are the same we will  set emite  function call with name  and data in this case the title and artist values
+                if ( get_id === this.currentPlayingSong[i][`song_id`] ) {
+                    
+                    this.$emit( `select_Play_song`, this.currentPlayingSong[i][`title`] )
+                    this.$emit( `select_Play_song`, this.currentPlayingSong[i][`artist`])
+
                     break
                 }
             }
@@ -73,7 +80,7 @@ font-size: 3rem;
 .added_list{
 place-items: center;
 background-color: papayawhip;
-width: 40%;
+width: 100%;
 }
 .add_btn{
     justify-self: end;

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+//imported the Songlist and the components
 
 import SongList from '@/components/SongList.vue';
 export default {

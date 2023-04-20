@@ -31,16 +31,19 @@
 </template>
 
 <script>
+//imported the playlist and the nowplaying  components
 import PlayList from '@/components/PlayList.vue';
 import NowPlaying from './NowPlaying.vue';
 
 export default {
     components: {
+        
         PlayList,
         NowPlaying,
     },
         data() {
             return {
+                //created variables with string values, undefind values , and with array of object 
                 noSelectedSongs: ' Please select a song!',
                 currentPlayingArtist: undefined,
                 currentPlayingSong:undefined,
@@ -83,22 +86,34 @@ export default {
                 }
     },
     methods: {
+        //created a method that takes details as an arrgument  and loops
+        // through the songs array
         add_songs: function ( details ){
-            let get_id = details[`target`].getAttribute(`songid`);
+            //targeted a songs id attribute  to use in our conditionals
+            let get_id = details[`target`].getAttribute( `songid` );
+            //looping through the songs array
             for ( let i = 0; i < this.songs.length; i++ ){
-            if ( get_id===this.songs[i][`song_id`]){
+            //checking if the id we get from looping through
+            //  is the same id we get from looping through our songs array
+                if ( get_id === this.songs[i][`song_id`] ){
+                //using unshift to add the songs when our add_songs button is clicked
                 this.selectedSongs.unshift( this.songs[i] )
-                this.noSelectedSongs =''
+             // setting the  noSelectedSongs variable empety 
+                    this.noSelectedSongs = ''
+                //stoping the loop if we find a match
                 break
             }
             }
                 
         }, 
+        // created another method to get a value emitted from a 
+        // child component with title and artist 
         getCurrentPlaying( title, artist){
+        //  setting variables currentPlayingArtistand and currentPlayingSong  with 
+        // value  we get from the  emitted values from emitter components
             this.currentPlayingArtist = artist
             this.currentPlayingSong = title
-            console.log( artist )
-            console.log(title)
+          
 
       }
     },
